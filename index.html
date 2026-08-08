@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>João Delivery</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f2f2f2;
+}
+
+header {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 25px 10px;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+}
+
+.produto {
+    background: white;
+    padding: 18px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    background: #111;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+}
+
+.carrinho {
+    background: white;
+    padding: 20px;
+    margin-top: 25px;
+    border-radius: 12px;
+}
+
+input, textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    margin: 7px 0 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🍽️ JOÃO DELIVERY</h1>
+    <p>Peça pelo celular</p>
+</header>
+
+<div class="container">
+
+<h2>🥤 Bebidas</h2>
+
+<div class="produto">
+    <div>
+        <strong>Refrigerante</strong><br>
+        R$ 5,00
+    </div>
+
+    <button onclick="adicionarProduto('Refrigerante', 5)">
+        + Adicionar
+    </button>
+</div>
+
+<h2>🍽️ Porções</h2>
+
+<div class="produto">
+    <div>
+        <strong>Porção</strong><br>
+        R$ 25,00
+    </div>
+
+    <button onclick="adicionarProduto('Porção', 25)">
+        + Adicionar
+    </button>
+</div>
+
+<div class="carrinho">
+
+<h2>🛒 Meu pedido</h2>
+
+<div id="lista">
+    Nenhum produto adicionado.
+</div>
+
+<h3>
+Total: R$ <span id="total">0,00</span>
+</h3>
+
+<input id="nome" placeholder="Seu nome">
+
+<input id="mesa" placeholder="Número da mesa">
+
+<textarea id="observacao"
+placeholder="Observações"></textarea>
+
+<button onclick="finalizarPedido()">
+✅ Finalizar pedido
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let pedido = [];
+
+function adicionarProduto(nome, preco) {
+
+    let produto = pedido.find(
+        item => item.nome === nome
+    );
+
+    if (produto) {
+        produto.quantidade++;
+    } else {
+        pedido.push({
+            nome: nome,
+            preco: preco,
+            quantidade: 1
+        });
+    }
+
+    mostrarPedido();
+}
+
+function aumentar(nome) {
+
+    let produto = pedido.find(
+        item => item.nome === nome
+    );
+
+    if (produto) {
+        produto.quantidade++;
+    }
+
+    mostrarPedido();
+}
+
+function diminuir(nome) {
+
+    let produto = pedido.find(
+        item => item.nome === nome
+    );
+
+    if (!produto) return;
+
+    produto.quantidade--;
+
+    if (produto.quantidade <= 0) {
+        pedido = pedido.filter(
+            item => item.nome !== nome
+        );
+    }
+
+    mostrarPedido();
+}
+
+function remover(nome) {
+
+    pedido = pedido.filter(
+        item => item.nome !== nome
+    );
+
+    mostrarPedido();
+}
+
+function mostrarPedido() {
+
+    let lista = "";
+    let total = 0;
+
+    pedido.forEach(item => {
+
+        let subtotal =
+            item.preco * item.quantidade;
+
+        total += subtotal;
+
+        lista += `
+        <div style="
+        padding:12px 0;
+        border-bottom:1px solid #ddd;
+        ">
+
+        <strong>${item.nome}</strong><br>
+
+        R$ ${item.preco.toFixed(2).replace(".", ",")}
+
+        <br><br>
+
+        <button onclick="diminuir('${item.nome}')">
+        −
+        </button>
+
+        <strong style="margin:0 12px">
+        ${item.quantidade}
+        </strong>
+
+        <button onclick="aumentar('${item.nome}')">
+        +
+        </button>
+
+        <button
+        onclick="remover('${item.nome}')"
+        style="background:#c62828;margin-left:8px">
+        🗑️
+        </button>
+
+        <br><br>
+
+        Subtotal:
+        R$ ${subtotal.toFixed(2).replace(".", ",")}
+
+        </div>
+        `;
+    });
+
+    if (pedido.length === 0) {
+        lista = "Nenhum produto adicionado.";
+    }
+
+    document.getElementById("lista").innerHTML =
+        lista;
+
+    document.getElementById("total").innerText =
+        total.toFixed(2).replace(".", ",");
+}
+
+function finalizarPedido() {
+
+    if (pedido.length === 0) {
+
+        alert("Adicione um produto primeiro.");
+
+        return;
+    }
+
+    let nome =
+        document.getElementById("nome").value;
+
+    let mesa =
+        document.getElementById("mesa").value;
+
+    let observacao =
+        document.getElementById("observacao").value;
+
+    if (nome === "") {
+
+        alert("Digite seu nome.");
+
+        return;
+    }
+
+    let total = 0;
+
+    let mensagem =
+        "🛒 NOVO PEDIDO - JOÃO DELIVERY\n\n";
+
+    mensagem +=
+        "Cliente: " + nome + "\n";
+
+    mensagem +=
+        "Mesa: " + mesa + "\n\n";
+
+    pedido.forEach(item => {
+
+        let subtotal =
+            item.preco * item.quantidade;
+
+        total += subtotal;
+
+        mensagem +=
+            "• " +
+            item.quantidade +
+            "x " +
+            item.nome +
+            " - R$ " +
+            subtotal.toFixed(2) +
+            "\n";
+    });
+
+    mensagem +=
+        "\n💰 TOTAL: R$ " +
+        total.toFixed(2);
+
+    if (observacao !== "") {
+
+        mensagem +=
+            "\n\n📝 Observação: " +
+            observacao;
+    }
+
+    let telefone =
+        "5511958225834";
+
+    let link =
+        "https://wa.me/" +
+        telefone +
+        "?text=" +
+        encodeURIComponent(mensagem);
+
+    window.open(link, "_blank");
+}
+
+</script>
+
+</body>
+  </html>
