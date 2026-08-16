@@ -1,332 +1,383 @@
+document.open();
+document.write(`
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>João Delivery</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diário do Motorista</title>
 <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: #f2f2f2;
-}
-
-header {
-    background: #111;
-    color: white;
-    text-align: center;
-    padding: 25px 10px;
-}
-
-.container {
-    max-width: 500px;
-    margin: auto;
-    padding: 20px;
-}
-
-.produto {
-    background: white;
-    padding: 18px;
-    margin-bottom: 12px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-button {
-    background: #111;
-    color: white;
-    border: none;
-    padding: 10px 14px;
-    border-radius: 8px;
-}
-
-.carrinho {
-    background: white;
-    padding: 20px;
-    margin-top: 25px;
-    border-radius: 12px;
-}
-
-input, textarea {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px;
-    margin: 7px 0 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
+body{margin:0;font-family:Arial;background:#f1f5f9;color:#0f172a}
+header{background:#0f172a;color:white;padding:20px}
+main{max-width:700px;margin:auto;padding:15px}
+.card{background:white;padding:16px;margin:12px 0;border-radius:16px;box-shadow:0 2px 8px #0002}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.box{background:#f8fafc;padding:12px;border-radius:12px}
+strong{display:block;font-size:20px;margin-top:5px}
+button{width:100%;padding:14px;border:0;border-radius:12px;font-weight:bold;margin-top:8px}
+.start{background:#16a34a;color:white}
+.stop{background:#dc2626;color:white}
+input,select{width:100%;padding:11px;margin:5px 0 10px;border:1px solid #ccc;border-radius:9px;box-sizing:border-box}
+label{font-size:13px;font-weight:bold}
+.item{padding:9px;border-bottom:1px solid #ddd}
+.lucro{font-size:28px;font-weight:bold}
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>🍽️ JOÃO DELIVERY</h1>
-    <p>Peça pelo celular</p>
+<h1>🚗 Diário do Motorista</h1>
+<div>Controle sua jornada e seu lucro real</div>
 </header>
 
-<div class="container">
+<main>
 
-<h2>🥤 Bebidas</h2>
+<div class="card">
+<h2 id="status">⚪ Jornada não iniciada</h2>
 
-<div class="produto">
-    <div>
-        <strong>Refrigerante</strong><br>
-        R$ 5,00
-    </div>
-
-    <button onclick="adicionarProduto('Refrigerante', 5)">
-        + Adicionar
-    </button>
+<div class="grid">
+<div class="box">⏱️ Tempo<strong id="tempo">00:00:00</strong></div>
+<div class="box">🛣️ Km<strong id="km">0,00</strong></div>
+<div class="box">🚗 Movimento<strong id="mov">00:00:00</strong></div>
+<div class="box">🛑 Parado<strong id="parado">00:00:00</strong></div>
 </div>
 
-<h2>🍽️ Porções</h2>
-
-<div class="produto">
-    <div>
-        <strong>Porção</strong><br>
-        R$ 25,00
-    </div>
-
-    <button onclick="adicionarProduto('Porção', 25)">
-        + Adicionar
-    </button>
-</div>
-
-<div class="carrinho">
-
-<h2>🛒 Meu pedido</h2>
-
-<div id="lista">
-    Nenhum produto adicionado.
-</div>
-
-<h3>
-Total: R$ <span id="total">0,00</span>
-</h3>
-
-<input id="nome" placeholder="Seu nome">
-
-<input id="mesa" placeholder="Número da mesa">
-
-<textarea id="observacao"
-placeholder="Observações"></textarea>
-
-<button onclick="finalizarPedido()">
-✅ Finalizar pedido
-</button>
+<button class="start" onclick="iniciar()">▶ INICIAR JORNADA</button>
+<button class="stop" onclick="finalizar()">■ FINALIZAR JORNADA</button>
 
 </div>
 
+<div class="card">
+<h2>💰 Faturamento</h2>
+
+<label>Uber</label>
+<input id="uber" type="number" placeholder="0">
+
+<label>99</label>
+<input id="nove" type="number" placeholder="0">
+
+<label>Outros</label>
+<input id="outros" type="number" placeholder="0">
 </div>
+
+<div class="card">
+<h2>🚘 Aluguel e Caução</h2>
+
+<label>Aluguel semanal</label>
+<input id="aluguel" type="number" placeholder="0">
+
+<label>Dias trabalhados por semana</label>
+<input id="dias" type="number" value="7">
+
+<label>Caução</label>
+<input id="caucao" type="number" placeholder="0">
+
+<label>Semanas para recuperar o caução</label>
+<input id="semanas" type="number" value="10">
+
+</div>
+
+<div class="card">
+<h2>🧾 Despesas</h2>
+
+<select id="categoria">
+<option>Combustível</option>
+<option>Pedágio</option>
+<option>Estacionamento</option>
+<option>Manutenção</option>
+<option>Borracharia</option>
+<option>Pneus</option>
+<option>Óleo/Revisão</option>
+<option>Peças</option>
+<option>Avaria</option>
+<option>Multa</option>
+<option>Seguro</option>
+<option>Outros</option>
+</select>
+
+<input id="valor" type="number" placeholder="Valor">
+
+<input id="descricao" placeholder="Descrição">
+
+<button onclick="addDespesa()">+ ADICIONAR DESPESA</button>
+
+<div id="lista"></div>
+</div>
+
+<div class="card">
+<h2>📊 Resultado</h2>
+
+<div class="grid">
+
+<div class="box">
+Faturamento
+<strong id="fat">R$ 0,00</strong>
+</div>
+
+<div class="box">
+Custos
+<strong id="custos">R$ 0,00</strong>
+</div>
+
+<div class="box">
+Resultado líquido
+<strong class="lucro" id="liquido">R$ 0,00</strong>
+</div>
+
+<div class="box">
+Resultado/hora
+<strong id="hora">R$ 0,00</strong>
+</div>
+
+<div class="box">
+Resultado/km
+<strong id="porKm">R$ 0,00</strong>
+</div>
+
+<div class="box">
+Reserva caução
+<strong id="reserva">R$ 0,00</strong>
+</div>
+
+</div>
+</div>
+
+</main>
 
 <script>
 
-let pedido = [];
+let rodando=false;
+let inicio=0;
+let distancia=0;
+let ultimoGPS=null;
+let movimento=0;
+let ultimaPosicao=0;
+let watch=null;
+let despesas=[];
 
-function adicionarProduto(nome, preco) {
-
-    let produto = pedido.find(
-        item => item.nome === nome
-    );
-
-    if (produto) {
-        produto.quantidade++;
-    } else {
-        pedido.push({
-            nome: nome,
-            preco: preco,
-            quantidade: 1
-        });
-    }
-
-    mostrarPedido();
+function dinheiro(v){
+return Number(v||0).toLocaleString('pt-BR',{
+style:'currency',
+currency:'BRL'
+});
 }
 
-function aumentar(nome) {
-
-    let produto = pedido.find(
-        item => item.nome === nome
-    );
-
-    if (produto) {
-        produto.quantidade++;
-    }
-
-    mostrarPedido();
+function tempo(ms){
+let s=Math.floor(ms/1000);
+let h=Math.floor(s/3600);
+s%=3600;
+let m=Math.floor(s/60);
+let ss=s%60;
+return String(h).padStart(2,'0')+':'+
+String(m).padStart(2,'0')+':'+
+String(ss).padStart(2,'0');
 }
 
-function diminuir(nome) {
+function calcularDistancia(a,b){
 
-    let produto = pedido.find(
-        item => item.nome === nome
-    );
+let R=6371000;
+let rad=Math.PI/180;
 
-    if (!produto) return;
+let dLat=(b.latitude-a.latitude)*rad;
+let dLon=(b.longitude-a.longitude)*rad;
 
-    produto.quantidade--;
+let x=Math.sin(dLat/2)**2+
+Math.cos(a.latitude*rad)*
+Math.cos(b.latitude*rad)*
+Math.sin(dLon/2)**2;
 
-    if (produto.quantidade <= 0) {
-        pedido = pedido.filter(
-            item => item.nome !== nome
-        );
-    }
+return 2*R*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));
 
-    mostrarPedido();
 }
 
-function remover(nome) {
+function iniciar(){
 
-    pedido = pedido.filter(
-        item => item.nome !== nome
-    );
-
-    mostrarPedido();
+if(!navigator.geolocation){
+alert("Seu celular não possui GPS disponível.");
+return;
 }
 
-function mostrarPedido() {
+rodando=true;
+inicio=Date.now();
+distancia=0;
+movimento=0;
+ultimoGPS=null;
+ultimaPosicao=Date.now();
 
-    let lista = "";
-    let total = 0;
+document.getElementById("status").innerText=
+"🟢 Jornada em andamento";
 
-    pedido.forEach(item => {
+watch=navigator.geolocation.watchPosition(
 
-        let subtotal =
-            item.preco * item.quantidade;
+function(pos){
 
-        total += subtotal;
+let agora=Date.now();
 
-        lista += `
-        <div style="
-        padding:12px 0;
-        border-bottom:1px solid #ddd;
-        ">
+if(ultimoGPS){
 
-        <strong>${item.nome}</strong><br>
+let d=calcularDistancia(
+ultimoGPS,
+pos.coords
+);
 
-        R$ ${item.preco.toFixed(2).replace(".", ",")}
+if(d>3 && d<1500){
 
-        <br><br>
+distancia+=d;
+movimento+=agora-ultimaPosicao;
 
-        <button onclick="diminuir('${item.nome}')">
-        −
-        </button>
-
-        <strong style="margin:0 12px">
-        ${item.quantidade}
-        </strong>
-
-        <button onclick="aumentar('${item.nome}')">
-        +
-        </button>
-
-        <button
-        onclick="remover('${item.nome}')"
-        style="background:#c62828;margin-left:8px">
-        🗑️
-        </button>
-
-        <br><br>
-
-        Subtotal:
-        R$ ${subtotal.toFixed(2).replace(".", ",")}
-
-        </div>
-        `;
-    });
-
-    if (pedido.length === 0) {
-        lista = "Nenhum produto adicionado.";
-    }
-
-    document.getElementById("lista").innerHTML =
-        lista;
-
-    document.getElementById("total").innerText =
-        total.toFixed(2).replace(".", ",");
 }
 
-function finalizarPedido() {
-
-    if (pedido.length === 0) {
-
-        alert("Adicione um produto primeiro.");
-
-        return;
-    }
-
-    let nome =
-        document.getElementById("nome").value;
-
-    let mesa =
-        document.getElementById("mesa").value;
-
-    let observacao =
-        document.getElementById("observacao").value;
-
-    if (nome === "") {
-
-        alert("Digite seu nome.");
-
-        return;
-    }
-
-    let total = 0;
-
-    let mensagem =
-        "🛒 NOVO PEDIDO - JOÃO DELIVERY\n\n";
-
-    mensagem +=
-        "Cliente: " + nome + "\n";
-
-    mensagem +=
-        "Mesa: " + mesa + "\n\n";
-
-    pedido.forEach(item => {
-
-        let subtotal =
-            item.preco * item.quantidade;
-
-        total += subtotal;
-
-        mensagem +=
-            "• " +
-            item.quantidade +
-            "x " +
-            item.nome +
-            " - R$ " +
-            subtotal.toFixed(2) +
-            "\n";
-    });
-
-    mensagem +=
-        "\n💰 TOTAL: R$ " +
-        total.toFixed(2);
-
-    if (observacao !== "") {
-
-        mensagem +=
-            "\n\n📝 Observação: " +
-            observacao;
-    }
-
-    let telefone =
-        "5511958225834";
-
-    let link =
-        "https://wa.me/" +
-        telefone +
-        "?text=" +
-        encodeURIComponent(mensagem);
-
-    window.open(link, "_blank");
 }
+
+ultimoGPS=pos.coords;
+ultimaPosicao=agora;
+
+},
+
+function(err){
+
+alert("Erro no GPS: "+err.message);
+
+},
+
+{
+enableHighAccuracy:true,
+maximumAge:3000,
+timeout:10000
+});
+
+}
+
+function finalizar(){
+
+rodando=false;
+
+if(watch!==null)
+navigator.geolocation.clearWatch(watch);
+
+document.getElementById("status").innerText=
+"⚪ Jornada finalizada";
+
+}
+
+function addDespesa(){
+
+let valor=Number(document.getElementById("valor").value);
+
+if(!valor){
+alert("Digite o valor da despesa.");
+return;
+}
+
+let categoria=document.getElementById("categoria").value;
+let descricao=document.getElementById("descricao").value;
+
+despesas.push({
+categoria,
+descricao,
+valor
+});
+
+document.getElementById("valor").value="";
+document.getElementById("descricao").value="";
+
+mostrarDespesas();
+
+}
+
+function mostrarDespesas(){
+
+let html="";
+
+despesas.forEach((d,i)=>{
+
+html+=
+'<div class="item">'+
+'<b>'+d.categoria+'</b>'+
+' — '+dinheiro(d.valor)+
+'<br>'+d.descricao+
+' <button onclick="remover('+i+')">Excluir</button>'+
+'</div>';
+
+});
+
+document.getElementById("lista").innerHTML=html;
+
+}
+
+function remover(i){
+
+despesas.splice(i,1);
+mostrarDespesas();
+
+}
+
+function atualizar(){
+
+let total=rodando?Date.now()-inicio:0;
+
+document.getElementById("tempo").innerText=tempo(total);
+
+document.getElementById("km").innerText=
+(distancia/1000).toFixed(2);
+
+document.getElementById("mov").innerText=
+tempo(movimento);
+
+document.getElementById("parado").innerText=
+tempo(Math.max(0,total-movimento));
+
+let faturamento=
+Number(document.getElementById("uber").value||0)+
+Number(document.getElementById("nove").value||0)+
+Number(document.getElementById("outros").value||0);
+
+let aluguel=
+Number(document.getElementById("aluguel").value||0)/
+Math.max(1,Number(document.getElementById("dias").value||7));
+
+let reserva=
+Number(document.getElementById("caucao").value||0)/
+(
+Math.max(1,Number(document.getElementById("semanas").value||10))*
+Math.max(1,Number(document.getElementById("dias").value||7))
+);
+
+let despesasTotal=
+despesas.reduce((s,d)=>s+d.valor,0);
+
+let custos=
+despesasTotal+aluguel+reserva;
+
+let liquido=faturamento-custos;
+
+document.getElementById("fat").innerText=
+dinheiro(faturamento);
+
+document.getElementById("custos").innerText=
+dinheiro(custos);
+
+document.getElementById("liquido").innerText=
+dinheiro(liquido);
+
+document.getElementById("hora").innerText=
+dinheiro(total?liquido/(total/3600000):0);
+
+document.getElementById("porKm").innerText=
+dinheiro(distancia?liquido/(distancia/1000):0);
+
+document.getElementById("reserva").innerText=
+dinheiro(reserva);
+
+}
+
+setInterval(atualizar,1000);
 
 </script>
 
 </body>
-  </html>
+</html>
+`);
+
+document.close();
