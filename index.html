@@ -3,87 +3,66 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#100d1d">
-<title>Aventura dos Poderes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#130d1d">
+<title>Aventura da Onze - Escola dos Poderes</title>
 
 <style>
 *{box-sizing:border-box}
 body{
  margin:0;
  font-family:Arial,sans-serif;
- background:radial-gradient(circle at top,#42234e,#100d1d 65%);
  color:white;
+ background:
+ radial-gradient(circle at 50% 0%,#592b52 0%,#201329 45%,#0b0912 100%);
  min-height:100vh;
 }
-.app{max-width:650px;margin:auto;padding:16px}
-header{text-align:center;padding:15px 0}
-header h1{color:#ff555f;font-size:27px;margin:5px}
-header p{color:#d7c7e7}
-.stats{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:9px;margin-bottom:15px
+button{font-family:inherit;touch-action:manipulation;cursor:pointer}
+.app{max-width:680px;margin:auto;padding:14px}
+header{text-align:center;padding:15px 5px}
+header h1{font-size:27px;color:#ff626e;margin:5px}
+header p{color:#e5cde9;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:13px}
+.stat{background:#291d37;border:1px solid #75456c;border-radius:15px;text-align:center;padding:12px 3px}
+.stat strong{display:block;font-size:24px;color:#ffd276}
+.stat span{font-size:12px;color:#e4d8ee}
+.card{background:#21192d;border:1px solid #60436b;border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:0 7px 25px #0005}
+.character{text-align:center;padding:10px}
+.avatar{
+ width:145px;height:160px;margin:auto;
+ position:relative;display:flex;align-items:center;justify-content:center;
+ font-size:95px;
+ filter:drop-shadow(0 0 18px #ff536d);
 }
-.stat{
- background:#261d37;border:1px solid #60466e;
- padding:13px 5px;border-radius:15px;text-align:center
-}
-.stat strong{display:block;font-size:23px;color:#ffca65}
-.stat span{font-size:12px;color:#ddd}
-.card{
- background:#211a31;border:1px solid #60466e;
- border-radius:22px;padding:20px;margin-bottom:15px;
- box-shadow:0 8px 25px #0005
-}
-.hero{text-align:center}
-.hero .character{font-size:85px}
-.hero h2{color:#ff646e;margin:8px}
-.hero p{line-height:1.5;color:#e1d9ec}
-button{
- border:0;border-radius:15px;padding:16px;
- font-size:18px;font-weight:bold;cursor:pointer;
- touch-action:manipulation
-}
-.primary{
- width:100%;background:#df465c;color:white;
- margin-top:12px
-}
-.secondary{background:#423456;color:white;width:100%;margin-top:10px}
-.portal{
- background:linear-gradient(135deg,#392347,#1c182e);
- border:2px solid #9e526e;border-radius:20px;
- padding:15px;text-align:center;margin:12px 0
-}
-.portal .emoji{font-size:50px}
-.phase{text-align:center;color:#ffc96b;font-weight:bold}
-.question{
- font-size:22px;text-align:center;
- font-weight:bold;line-height:1.4;margin:20px 0
-}
-.picture{text-align:center;font-size:75px;margin:15px}
+.character h2{color:#ff7781;margin:8px}
+.character p{line-height:1.5;color:#e7dbea}
+.voice{width:100%;padding:15px;background:#4a315c;color:white;border:1px solid #9e6ba4;border-radius:15px;font-size:17px;font-weight:bold}
+.voice:active,.main:active{transform:scale(.98)}
+.main{width:100%;padding:17px;background:linear-gradient(120deg,#df465f,#a53663);color:white;border:0;border-radius:15px;font-size:18px;font-weight:bold;margin-top:12px}
+.secondary{background:#493554}
+.portal{text-align:center;border:2px solid #a64e76;border-radius:20px;padding:13px;background:linear-gradient(130deg,#3b2045,#171326)}
+.portal .emoji{font-size:55px}
+.portal h3{color:#ffc96b;margin:7px}
+.phase{text-align:center;color:#ffc96b;font-weight:bold;font-size:13px;margin-bottom:10px}
+.progress{height:12px;background:#49394e;border-radius:20px;overflow:hidden;margin:12px 0}
+.fill{height:100%;background:linear-gradient(90deg,#fa5c7a,#ffc96b);transition:.4s}
+.picture{text-align:center;font-size:75px;margin:14px}
+.question{text-align:center;font-size:22px;font-weight:bold;line-height:1.4;margin:17px 0}
+.hint{text-align:center;color:#e7cce8;font-size:14px;margin-bottom:13px}
 .answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.answer{
- background:#382b50;color:white;
- border:2px solid #765c91;min-height:65px;
-}
-.answer:active{transform:scale(.97)}
-.answer.good{background:#176c48;border-color:#52e39c}
-.answer.bad{background:#793346;border-color:#ff8999}
-.feedback{
- display:none;text-align:center;padding:15px;
- border-radius:15px;margin-top:15px;line-height:1.5
-}
-.success{display:block;background:#194b39;color:#b9ffdc}
-.retry{display:block;background:#593b28;color:#ffe0a6}
-.bar{height:12px;background:#40334f;border-radius:20px;overflow:hidden;margin:12px 0}
-.fill{height:100%;background:#ff586a;width:0;transition:.3s}
-.reward{text-align:center;font-size:55px}
-.hidden{display:none}
-.mission{
- padding:12px;background:#302441;border-radius:13px;
- margin:8px 0;color:#f6e6ff
-}
-footer{text-align:center;font-size:12px;color:#a99bb7;padding:15px}
+.answer{background:#382947;border:2px solid #805a91;color:white;min-height:67px;border-radius:15px;font-size:21px;font-weight:bold;padding:9px}
+.answer:disabled{opacity:.8}
+.answer.good{background:#176943;border-color:#6be5a5}
+.answer.bad{background:#763247;border-color:#ff8196}
+.feedback{display:none;padding:15px;border-radius:15px;text-align:center;line-height:1.5;margin-top:14px;font-weight:bold}
+.success{display:block;background:#164c39;color:#c4ffe0}
+.retry{display:block;background:#624124;color:#ffe3b5}
+.mission{padding:12px;background:#352541;border-radius:12px;margin:8px 0;font-size:14px}
+.hidden{display:none!important}
+.medal{text-align:center;font-size:65px}
+.center{text-align:center}
+footer{text-align:center;color:#a99bb7;font-size:11px;padding:12px}
+select{background:#392945;color:white;padding:10px;border-radius:10px;border:1px solid #76577f}
 </style>
 </head>
 
@@ -91,312 +70,573 @@ footer{text-align:center;font-size:12px;color:#a99bb7;padding:15px}
 <div class="app">
 
 <header>
-<h1>⚡ A AVENTURA DOS PODERES ⚡</h1>
-<p>O mundo das letras precisa de uma heroína!</p>
+<h1>⚡ AVENTURA DOS PODERES ⚡</h1>
+<p>Uma escola mágica onde aprender é um superpoder!</p>
 </header>
 
 <div class="stats">
- <div class="stat">
-  <strong id="xp">0</strong>
-  <span>⭐ XP</span>
- </div>
- <div class="stat">
-  <strong id="coins">0</strong>
-  <span>💎 Cristais</span>
- </div>
- <div class="stat">
-  <strong id="streak">0</strong>
-  <span>🔥 Dias</span>
- </div>
+ <div class="stat"><strong id="xp">0</strong><span>⭐ EXPERIÊNCIA</span></div>
+ <div class="stat"><strong id="crystals">0</strong><span>💎 CRISTAIS</span></div>
+ <div class="stat"><strong id="streak">0</strong><span>🔥 DIAS</span></div>
 </div>
 
-<div class="card hero">
- <div class="character">🧒🏻</div>
- <h2>Conheça a Eleven!</h2>
- <p>
- Você é uma jovem heroína com poderes especiais.
- Sua missão é dominar as letras, formar palavras
- e abrir os portais secretos!
+<div class="card character">
+ <div class="avatar" id="avatar">🧒🏻</div>
+ <h2>Olá, pequena heroína!</h2>
+ <p id="teacherText">
+ Eu sou sua professora! Vamos descobrir os poderes secretos das letras?
  </p>
- <button class="secondary" onclick="speak('Olá, heroína! Eu sou sua professora. Vamos aprender e desbloquear poderes especiais!')">
- 🔊 CONVERSAR COM A PROFESSORA
- </button>
+ <button class="voice" onclick="repeatLesson()">🔊 OUVIR A PROFESSORA</button>
+ <p style="font-size:12px;color:#bda7c9">Sua companheira de aprendizagem está pronta!</p>
 </div>
 
-<div class="card">
- <div class="phase" id="phase">PORTAL 1 — O DESPERTAR</div>
- <div class="bar"><div class="fill" id="progress"></div></div>
+<div class="card" id="game">
+
+ <div class="phase" id="phase">PORTAL 1 DE 8</div>
+
+ <div class="progress">
+  <div class="fill" id="progress"></div>
+ </div>
 
  <div class="portal">
   <div class="emoji" id="portalEmoji">🌀</div>
-  <strong id="portalName">Portal das Letras</strong>
+  <h3 id="portalName">O despertar das letras</h3>
+  <div style="font-size:12px;color:#dfc7e9">Complete a missão para avançar!</div>
  </div>
 
  <div class="picture" id="picture">🐝</div>
+
  <div class="question" id="question"></div>
+
+ <div class="hint" id="hint"></div>
+
  <div class="answers" id="answers"></div>
 
  <div class="feedback" id="feedback"></div>
 
- <button class="secondary" onclick="repeat()">
- 🔊 OUVIR DESAFIO
+ <button class="voice secondary" style="margin-top:12px" onclick="repeatLesson()">
+ 🔊 REPETIR A EXPLICAÇÃO
  </button>
 
- <button class="primary hidden" id="next" onclick="next()">
- DESBLOQUEAR PRÓXIMA FASE ⚡
+ <button class="main hidden" id="next" onclick="nextPhase()">
+ ABRIR PRÓXIMO PORTAL ⚡
  </button>
+
 </div>
 
 <div class="card">
- <h2 style="color:#ffc96b;text-align:center">🏆 Sala das Conquistas</h2>
- <div class="mission">⭐ Complete atividades e ganhe XP.</div>
- <div class="mission">💎 Acumule cristais para desbloquear poderes.</div>
- <div class="mission">🔥 Estude em dias diferentes e aumente sua sequência.</div>
- <div class="mission">🏅 Complete os portais e conquiste medalhas.</div>
- <div class="reward" id="medal">🔒</div>
- <p style="text-align:center" id="medalText">Sua medalha está esperando!</p>
+ <h2 style="color:#ffc96b;text-align:center">🏆 SALA DOS PODERES</h2>
+ <div class="mission">⭐ Acerte desafios para conquistar experiência.</div>
+ <div class="mission">💎 Ganhe cristais ao aprender palavras.</div>
+ <div class="mission">🔥 Volte em outros dias para aumentar sua sequência.</div>
+ <div class="mission">🏅 Conquiste a medalha de Superleitora.</div>
+ <div class="center" style="margin-top:15px">
+  <div class="medal" id="medal">🔒</div>
+  <div id="medalText">Sua medalha está esperando!</div>
+ </div>
 </div>
 
 <div class="card hidden" id="finish">
- <div class="reward">🏆🌟⚡</div>
- <h2 style="text-align:center;color:#ffc96b">VOCÊ É UMA HEROÍNA!</h2>
- <p style="text-align:center">Todos os portais foram desbloqueados!</p>
- <p style="text-align:center" id="result"></p>
- <button class="primary" onclick="restart()">JOGAR NOVAMENTE</button>
+ <div class="medal">🏆⚡🌟</div>
+ <h2 class="center" style="color:#ffc96b">VOCÊ É UMA SUPER-HEROÍNA!</h2>
+ <p class="center">Você conseguiu completar todos os portais!</p>
+ <p class="center" id="result"></p>
+ <button class="main" onclick="restartGame()">RECOMEÇAR A AVENTURA</button>
+</div>
+
+<div class="card">
+ <h3 style="color:#ffc96b">🎧 Configuração de voz</h3>
+ <p style="font-size:13px;color:#d8c8e5">Escolha uma voz feminina em português, se disponível no aparelho.</p>
+ <select id="voiceSelect" style="width:100%" onchange="saveVoice()">
+  <option value="">Voz automática em português</option>
+ </select>
+ <button class="voice" style="margin-top:10px" onclick="testVoice()">TESTAR A VOZ 🔊</button>
 </div>
 
 <footer>
- AVENTURA DOS PODERES • APRENDER É UM SUPERPODER
+ AVENTURA DOS PODERES • ESCOLA DA LEITURA
 </footer>
 
 </div>
 
 <script>
-const KEY="poderes_letras_save";
 
-const questions=[
+// ===================================
+// BANCO DE ATIVIDADES
+// ===================================
+
+const lessons = [
+
 {
- name:"O despertar",
+ name:"O despertar das letras",
  emoji:"🌀",picture:"🐝",
- q:"Qual é a primeira letra de ABELHA?",
- a:["A","B","E","O"],correct:"A",
- explanation:"ABELHA começa com A!"
+ question:"Qual é a primeira letra da palavra ABELHA?",
+ options:["A","B","E","O"],
+ answer:"A",
+ hint:"Dica: A palavra começa com o som A.",
+ explanation:"ABELHA começa com a letra A!",
+ voice:"Olá! Vamos começar! Olhe a abelhinha. Qual é a primeira letra da palavra abelha?"
 },
+
 {
  name:"O poder das vogais",
  emoji:"🔮",picture:"🌈",
- q:"Qual destas letras é uma vogal?",
- a:["M","O","T","P"],correct:"O",
- explanation:"O é uma vogal. A E I O U são as cinco vogais!"
+ question:"Qual destas letras é uma vogal?",
+ options:["M","O","T","P"],
+ answer:"O",
+ hint:"Dica: As vogais são A, E, I, O e U.",
+ explanation:"Muito bem! A letra O é uma vogal!",
+ voice:"Agora vamos descobrir as vogais. A E I O U são nossas cinco vogais. Qual delas aparece entre as opções?"
 },
+
 {
  name:"A força das sílabas",
  emoji:"⚡",picture:"⚽",
- q:"Qual é a primeira sílaba de BOLA?",
- a:["BO","CA","LA","MA"],correct:"BO",
- explanation:"BO mais LA forma BOLA!"
+ question:"Qual é a primeira sílaba de BOLA?",
+ options:["BO","CA","LA","MA"],
+ answer:"BO",
+ hint:"Dica: Fale devagar: BO-LA.",
+ explanation:"BO mais LA forma BOLA!",
+ voice:"Vamos juntar os sons! Fale comigo: BO-LA. Qual é a primeira sílaba?"
 },
+
 {
  name:"O portal das palavras",
  emoji:"🚪",picture:"🏠",
- q:"CA + SA forma qual palavra?",
- a:["CASA","CAMA","CANA","MALA"],correct:"CASA",
- explanation:"Muito bem! CA mais SA forma CASA!"
+ question:"CA + SA forma qual palavra?",
+ options:["CASA","CAMA","CANA","MALA"],
+ answer:"CASA",
+ hint:"Dica: Junte as duas partes.",
+ explanation:"CA mais SA forma CASA!",
+ voice:"Você já consegue juntar sílabas! CA mais SA forma qual palavra?"
 },
+
 {
- name:"O poder de completar",
+ name:"A letra desaparecida",
  emoji:"✨",picture:"🐱",
- q:"Qual letra falta em GAT_?",
- a:["A","O","E","U"],correct:"O",
- explanation:"GATO termina com a letra O!"
+ question:"Qual letra falta para completar GAT_?",
+ options:["A","O","E","U"],
+ answer:"O",
+ hint:"Dica: G-A-T-O.",
+ explanation:"GATO! A letra que faltava era O!",
+ voice:"Atenção! Uma letra desapareceu! Vamos completar a palavra GATO."
 },
+
 {
  name:"O laboratório secreto",
  emoji:"🧪",picture:"🍌",
- q:"Qual palavra representa esta fruta?",
- a:["BANANA","MAÇÃ","UVA","LARANJA"],correct:"BANANA",
- explanation:"Isso mesmo! A palavra é BANANA!"
+ question:"Qual palavra representa esta fruta?",
+ options:["BANANA","MAÇÃ","UVA","LARANJA"],
+ answer:"BANANA",
+ hint:"Dica: É uma fruta amarela!",
+ explanation:"Muito bem! BANANA é a palavra correta!",
+ voice:"Olhe a fruta! Ela é amarela e muito gostosa. Qual é o nome dela?"
 },
+
 {
- name:"A leitura mental",
+ name:"O poder da leitura",
  emoji:"🧠",picture:"🐶",
- q:"Qual frase está escrita corretamente?",
- a:["O CÃO LATE.","O CÃO LATA.","O CÃO LOTE.","O CÃO LUTO."],
- correct:"O CÃO LATE.",
- explanation:"O cão late! Você está aprendendo a ler!"
+ question:"Qual frase está escrita corretamente?",
+ options:["O CÃO LATE.","O CÃO LATA.","O CÃO LOTE.","O CÃO LUTO."],
+ answer:"O CÃO LATE.",
+ hint:"Dica: O cachorro faz au-au!",
+ explanation:"O CÃO LATE! Você já está lendo frases!",
+ voice:"Chegou a hora de ler! Leia as frases e encontre aquela que está escrita corretamente."
 },
+
 {
  name:"O poder supremo",
  emoji:"🌟",picture:"📚",
- q:"Complete: A MENINA GOSTA DE ___",
- a:["LER","AZUL","CASA","BOLA"],correct:"LER",
- explanation:"Parabéns! Você conquistou o poder da leitura!"
+ question:"Complete: A MENINA GOSTA DE ___",
+ options:["LER","AZUL","CASA","BOLA"],
+ answer:"LER",
+ hint:"Dica: É uma atividade feita com livros!",
+ explanation:"Parabéns! Você conquistou o poder da leitura!",
+ voice:"Última missão! Complete a frase: A menina gosta de... Pense com carinho!"
 }
+
 ];
+
+// ===================================
+// DADOS DO JOGO
+// ===================================
+
+const STORAGE="aventura_poderes_alfabetizacao_v2";
 
 let index=0;
 let xp=0;
-let coins=0;
+let crystals=0;
 let streak=0;
 let completed=[];
-let locked=false;
 let lastDay="";
-let questionRewarded=false;
+let locked=false;
+let voices=[];
 
-function today(){
- return new Date().toLocaleDateString("en-CA");
+// ===================================
+// VOZ
+// ===================================
+
+function loadVoices(){
+ if(!("speechSynthesis" in window))return;
+
+ voices=speechSynthesis.getVoices();
+
+ const select=document.getElementById("voiceSelect");
+ const old=localStorage.getItem("gameVoice")||"";
+
+ select.innerHTML='<option value="">Voz automática em português</option>';
+
+ voices.filter(v=>v.lang.toLowerCase().startsWith("pt"))
+ .forEach((v)=>{
+  const option=document.createElement("option");
+  option.value=v.name;
+  option.textContent=v.name+" ("+v.lang+")";
+  select.appendChild(option);
+ });
+
+ select.value=old;
 }
 
 function speak(text){
- if(!("speechSynthesis" in window))return;
+
+ if(!("speechSynthesis" in window)){
+  document.getElementById("teacherText").textContent=text;
+  return;
+ }
+
  speechSynthesis.cancel();
- const msg=new SpeechSynthesisUtterance(text);
- msg.lang="pt-BR";
- msg.rate=.83;
- msg.pitch=1.12;
- speechSynthesis.speak(msg);
+
+ const message=new SpeechSynthesisUtterance(text);
+ message.lang="pt-BR";
+ message.rate=.86;
+ message.pitch=1.13;
+ message.volume=1;
+
+ const chosen=document.getElementById("voiceSelect").value;
+
+ let voice=voices.find(v=>v.name===chosen);
+
+ if(!voice){
+  voice=voices.find(v=>v.lang.toLowerCase()==="pt-br");
+ }
+
+ if(!voice){
+  voice=voices.find(v=>v.lang.toLowerCase().startsWith("pt"));
+ }
+
+ if(voice)message.voice=voice;
+
+ speechSynthesis.speak(message);
 }
 
+function repeatLesson(){
+
+ if(index>=lessons.length)return;
+
+ const lesson=lessons[index];
+
+ speak(lesson.voice+" "+lesson.question+" "+lesson.hint);
+}
+
+function testVoice(){
+ speak("Olá, pequena heroína! Eu sou sua professora. Vamos aprender juntas? Cada palavra que você aprende aumenta seu poder!");
+}
+
+function saveVoice(){
+ localStorage.setItem("gameVoice",document.getElementById("voiceSelect").value);
+}
+
+if("speechSynthesis" in window){
+ speechSynthesis.onvoiceschanged=loadVoices;
+ loadVoices();
+}
+
+// ===================================
+// SALVAMENTO
+// ===================================
+
 function save(){
+
+ const data={
+  index:index,
+  xp:xp,
+  crystals:crystals,
+  streak:streak,
+  completed:completed,
+  lastDay:lastDay
+ };
+
  try{
- localStorage.setItem(KEY,JSON.stringify({
- index,xp,coins,streak,completed,lastDay
- }));
- }catch(e){}
+  localStorage.setItem(STORAGE,JSON.stringify(data));
+ }catch(e){
+  console.log("Salvamento indisponível");
+ }
 }
 
 function load(){
+
  try{
- const d=JSON.parse(localStorage.getItem(KEY));
- if(!d)return;
- if(!Array.isArray(d.completed)||!Number.isFinite(d.xp)||
- !Number.isFinite(d.coins)||!Number.isInteger(d.index))return;
- xp=Math.max(0,d.xp);
- coins=Math.max(0,d.coins);
- streak=Math.max(0,d.streak||0);
- completed=d.completed.filter(n=>Number.isInteger(n)&&n>=0&&n<questions.length);
- lastDay=d.lastDay||"";
- index=Math.max(0,Math.min(d.index,questions.length));
- if(completed.length===questions.length)index=questions.length;
- else if(completed.includes(index))index=questions.findIndex((q,i)=>!completed.includes(i));
- }catch(e){}
+
+  const data=JSON.parse(localStorage.getItem(STORAGE));
+
+  if(!data)return;
+
+  if(!Array.isArray(data.completed))return;
+
+  if(!Number.isFinite(data.xp)||!Number.isFinite(data.crystals))return;
+
+  xp=Math.max(0,data.xp);
+  crystals=Math.max(0,data.crystals);
+  streak=Math.max(0,data.streak||0);
+  completed=data.completed.filter(n=>
+   Number.isInteger(n)&&n>=0&&n<lessons.length
+  );
+  lastDay=data.lastDay||"";
+  index=Math.max(0,Math.min(data.index||0,lessons.length));
+
+  if(completed.length===lessons.length){
+   index=lessons.length;
+  }else if(completed.includes(index)){
+   index=lessons.findIndex((item,i)=>!completed.includes(i));
+  }
+
+ }catch(e){
+  console.log("Dados anteriores não encontrados");
+ }
 }
 
+// ===================================
+// SEQUÊNCIA DIÁRIA
+// ===================================
+
+function dayKey(date){
+ return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+}
+
+function registerDay(){
+
+ const now=new Date();
+ const today=dayKey(now);
+
+ if(lastDay===today)return;
+
+ const yesterday=new Date(now);
+ yesterday.setDate(yesterday.getDate()-1);
+
+ if(lastDay===dayKey(yesterday)){
+  streak++;
+ }else{
+  streak=1;
+ }
+
+ lastDay=today;
+ save();
+}
+
+// ===================================
+// INTERFACE
+// ===================================
+
 function updateStats(){
+
  document.getElementById("xp").textContent=xp;
- document.getElementById("coins").textContent=coins;
+ document.getElementById("crystals").textContent=crystals;
  document.getElementById("streak").textContent=streak;
+
  document.getElementById("medal").textContent=
- completed.length>=questions.length?"🏅":"🔒";
+ completed.length===lessons.length?"🏅":"🔒";
+
  document.getElementById("medalText").textContent=
- completed.length>=questions.length?"Medalha de Superleitora conquistada!":
- "Fases concluídas: "+completed.length+" de "+questions.length;
+ completed.length===lessons.length?
+ "MEDALHA DE SUPERLEITORA CONQUISTADA!":
+ "Portais concluídos: "+completed.length+" de "+lessons.length;
 }
 
 function render(){
- if(index>=questions.length){finish();return;}
+
+ if(index>=lessons.length){
+  finish();
+  return;
+ }
+
  locked=false;
- questionRewarded=false;
- const q=questions[index];
+
+ const l=lessons[index];
+
+ document.getElementById("game").classList.remove("hidden");
+ document.getElementById("finish").classList.add("hidden");
+
  document.getElementById("phase").textContent=
- "PORTAL "+(index+1)+" — "+q.name.toUpperCase();
- document.getElementById("portalEmoji").textContent=q.emoji;
- document.getElementById("portalName").textContent=q.name;
- document.getElementById("picture").textContent=q.picture;
- document.getElementById("question").textContent=q.q;
+ "PORTAL "+(index+1)+" DE "+lessons.length;
+
+ document.getElementById("portalEmoji").textContent=l.emoji;
+ document.getElementById("portalName").textContent=l.name;
+ document.getElementById("picture").textContent=l.picture;
+ document.getElementById("question").textContent=l.question;
+ document.getElementById("hint").textContent=l.hint;
+
  document.getElementById("progress").style.width=
- (completed.length/questions.length*100)+"%";
+ (completed.length/lessons.length*100)+"%";
+
  document.getElementById("feedback").style.display="none";
  document.getElementById("next").classList.add("hidden");
 
  const box=document.getElementById("answers");
  box.innerHTML="";
- q.a.forEach(option=>{
- const b=document.createElement("button");
- b.className="answer";
- b.textContent=option;
- b.onclick=()=>check(option,b);
- box.appendChild(b);
+
+ l.options.forEach(option=>{
+
+  const b=document.createElement("button");
+  b.className="answer";
+  b.textContent=option;
+
+  b.onclick=()=>checkAnswer(option,b);
+
+  box.appendChild(b);
  });
+
  updateStats();
  save();
- setTimeout(()=>speak(q.q+" Escolha a resposta correta!"),500);
+
+ document.getElementById("teacherText").textContent=
+ "Vamos aprender! "+l.name+". Eu vou ajudar você!";
+
+ setTimeout(()=>repeatLesson(),700);
 }
 
-function repeat(){
- if(index<questions.length)speak(questions[index].q);
-}
+// ===================================
+// RESPOSTAS
+// ===================================
 
-function check(option,button){
+function checkAnswer(option,button){
+
  if(locked||button.disabled)return;
- const q=questions[index];
+
+ const l=lessons[index];
  const feedback=document.getElementById("feedback");
 
- if(option===q.correct){
- locked=true;
- button.classList.add("good");
- xp+=10;
- coins+=5;
- if(!completed.includes(index))completed.push(index);
- feedback.className="feedback success";
- feedback.innerHTML="⚡ PODER DESBLOQUEADO!<br>"+q.explanation+
- "<br>Você ganhou 10 XP e 5 cristais!";
- document.querySelectorAll(".answer").forEach(b=>b.disabled=true);
- document.getElementById("next").classList.remove("hidden");
- speak("Muito bem, heroína! "+q.explanation+" Você ganhou dez pontos de experiência!");
+ if(option===l.answer){
+
+  locked=true;
+
+  button.classList.add("good");
+
+  xp+=10;
+  crystals+=5;
+
+  if(!completed.includes(index)){
+   completed.push(index);
+  }
+
+  feedback.className="feedback success";
+  feedback.innerHTML=
+   "⚡ PODER DESBLOQUEADO!<br><br>"+
+   "🎉 "+l.explanation+
+   "<br><br>⭐ +10 XP<br>💎 +5 CRISTAIS";
+
+  document.querySelectorAll(".answer").forEach(b=>{
+   b.disabled=true;
+  });
+
+  document.getElementById("next").classList.remove("hidden");
+
+  document.getElementById("teacherText").textContent=
+   "Uau! Você conseguiu! Estou muito orgulhosa de você!";
+
+  speak("Uau! Você conseguiu! "+l.explanation+
+   " Você ganhou dez pontos de experiência e cinco cristais!");
+
  }else{
- button.classList.add("bad");
- button.disabled=true;
- feedback.className="feedback retry";
- feedback.innerHTML="💛 Não desista! Tente outra resposta.<br>Você consegue!";
- speak("Quase! Vamos tentar outra resposta. Você consegue!");
+
+  button.classList.add("bad");
+  button.disabled=true;
+
+  feedback.className="feedback retry";
+
+  feedback.innerHTML=
+   "💛 NÃO DESISTA!<br>"+
+   "Vamos tentar novamente!<br>"+
+   l.hint;
+
+  document.getElementById("teacherText").textContent=
+   "Não tem problema errar! Aprender é tentar novamente.";
+
+  speak("Não tem problema! Você está aprendendo. "+l.hint+
+   " Tente outra resposta!");
+
  }
+
  updateStats();
  save();
 }
 
-function next(){
+// ===================================
+// AVANÇAR
+// ===================================
+
+function nextPhase(){
+
  if(!locked)return;
+
  index++;
- if(index>=questions.length){finish();return;}
- render();
+
+ if(index>=lessons.length){
+  finish();
+ }else{
+  render();
+ }
 }
+
+// ===================================
+// FINAL
+// ===================================
 
 function finish(){
+
  document.getElementById("game").classList.add("hidden");
  document.getElementById("finish").classList.remove("hidden");
- document.getElementById("result").textContent=
- "Você conseguiu "+xp+" XP e "+coins+" cristais!";
 
  document.getElementById("progress").style.width="100%";
- speak("Parabéns, heroína! Você completou todas as missões!");
+
+ document.getElementById("result").textContent=
+ "Você conquistou "+xp+" XP e "+crystals+" cristais!";
+
+ updateStats();
  save();
+
+ speak("Parabéns, pequena heroína! Você completou todos os portais! Você é uma superleitora!");
 }
 
-function restart(){
- index=0;xp=0;coins=0;completed=[];
- document.getElementById("finish").classList.add("hidden");
- document.getElementById("game").classList.remove("hidden");
+// ===================================
+// RECOMEÇAR
+// ===================================
+
+function restartGame(){
+
+ index=0;
+ xp=0;
+ crystals=0;
+ completed=[];
+ locked=false;
+
  save();
+
  render();
 }
 
-function registerStudyDay(){
- const currentDay=today();
- if(lastDay===currentDay)return;
- const yesterday=new Date();
- yesterday.setDate(yesterday.getDate()-1);
- const yesterdayString=yesterday.toLocaleDateString("en-CA");
- streak=lastDay===yesterdayString?streak+1:1;
- lastDay=currentDay;
- save();
-}
+// ===================================
+// INICIALIZAÇÃO
+// ===================================
 
 load();
-registerStudyDay();
+registerDay();
 updateStats();
-if(index>=questions.length)finish();
-else render();
+
+if(index>=lessons.length){
+ finish();
+}else{
+ render();
+}
 
 </script>
 </body>
